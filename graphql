@@ -1,0 +1,120 @@
+FUENTE:
+https://www.apollographql.com/blog/community/backend/using-graphql-with-ruby-on-rails/
+
+GraphQL Mutations In Ruby On Rails
+https://selleo.com/blog/graphql-mutations-in-ruby-on-rails
+
+
+ $ rails bundle add graphql      
+ $ rails bundle add graphiql-rails      
+
+gem 'graphiql-rails', group: :development
+
+ $ rails generate graphql:install
+
+
+
+Agregar el código siguientes en el archivo routes.rb
+
+Rails.application.routes.draw do
+    if Rails.env.development?
+      mount GraphiQL::Rails::Engine, at: "/graphiql", graphql_path: "/graphql"
+    end
+    post "/graphql", to: "graphql#execute"
+end
+
+
+(por postman es el método POST)
+http://localhost:3000/graphiql
+
+
+query {
+  testField
+}
+
+
+
+RESP:
+{
+  "data": {
+    "testField": "Hello World!"
+  }
+}
+
+
+Instalación exitosa de graphql
+
+------------------------------------
+
+
+rails g graphql:object item
+
+ $ rails generate graphql:install
+ $ rails generate graphql:object book
+
+
+query {
+  books {
+    id
+    title
+    author
+    genre
+    resume
+  }
+}
+
+
+---
+
+
+
+query {
+  book(id: 1) {
+    id
+    title
+    author
+    genre
+    resume
+  }
+}
+
+
+---
+
+mutation {
+  createBook(
+    title: "Chocozuela"
+    author: "Cz"
+  ) {
+    id
+    title
+  }
+}
+
+
+---
+
+mutation {
+  updateBook(
+    id: 21
+    title: "Chocozuela2"
+    author: "Cz2"
+  ) {
+    id
+    title
+    author
+  }
+}
+
+
+---
+
+
+mutation {
+  destroyBook(
+    id: 21
+  ) {
+    id
+    title
+  }
+}

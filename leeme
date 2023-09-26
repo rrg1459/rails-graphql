@@ -1,0 +1,5 @@
+
+rails generate scaffold Book title:string author:string genre:string resume:string
+
+
+bundle add faker populator byebug
